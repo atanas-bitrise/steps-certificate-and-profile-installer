@@ -13,6 +13,7 @@ import (
 	"github.com/bitrise-io/go-utils/log"
 	"github.com/bitrise-io/go-utils/retry"
 	"github.com/bitrise-io/go-utils/v2/command"
+	v1command "github.com/bitrise-io/go-utils/command"
 	"github.com/bitrise-io/go-utils/v2/env"
 	"github.com/bitrise-io/go-xcode/certificateutil"
 	"github.com/bitrise-io/go-xcode/v2/autocodesign/certdownloader"
@@ -200,7 +201,7 @@ func failE(err error) {
 }
 
 func exportEnvironmentVariable(key string, value string) {
-	cmd := command.New("envman", "add", "--key", key)
+	cmd := v1command.New("envman", "add", "--key", key)
 	cmd.SetStdin(strings.NewReader(value))
 	if err := cmd.Run(); err != nil {
 		failF("Failed to export %s=%s: %s", key, value, err)
@@ -347,10 +348,10 @@ func main() {
 		if len(teamId) == 0 {
 			teamId = profile.Info.Name
 		}
-		if profile.Info.ExportType == "development"; len(developmentProfileName) == 0 {
+		if profile.Info.ExportType == "development" && len(developmentProfileName) == 0 {
 			developmentProfileName = profile.Info.Name
 		}
-		if profile.Info.ExportType != "development"; len(productionProfileName) == 0 {
+		if profile.Info.ExportType != "development" && len(productionProfileName) == 0 {
 			productionProfileName = profile.Info.Name
 		}
 
