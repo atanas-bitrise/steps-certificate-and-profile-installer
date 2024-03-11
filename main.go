@@ -199,6 +199,14 @@ func failE(err error) {
 	os.Exit(1)
 }
 
+func exportEnvironmentVariable(key string, value string) {
+	cmd := command.New("envman", "add", "--key", key)
+	cmd.SetStdin(strings.NewReader(value))
+	if err := cmd.Run(); err != nil {
+		failF("Failed to export %s=%s: %s", key, value, err)
+	}
+}
+
 func main() {
 	configs := createConfigFromEnvs()
 	configs.print()
@@ -323,6 +331,10 @@ func main() {
 	fmt.Println()
 	log.Infof("Installing Provisioning Profile(s)")
 
+	var teamId string
+	var developmentProfileName string
+	var productionProfileName string
+
 	for i, profile := range profiles {
 		log.Printf("%d/%d Provisioning Profile:", i+1, len(profiles))
 		log.Printf("%s", profile.Info.String(certificates...))
@@ -332,8 +344,22 @@ func main() {
 			failE(fmt.Errorf("Failed to install Provisioning Profile: %w", err))
 		}
 
+		if len(teamId) == 0 {
+			teamId = profile.Info.Name
+		}
+		if profile.Info.ExportType == "development"; len(developmentProfileName) == 0 {
+			developmentProfileName = profile.Info.Name
+		}
+		if profile.Info.ExportType != "development"; len(productionProfileName) == 0 {
+			productionProfileName = profile.Info.Name
+		}
+
 		log.Printf("%s", profile.Info.Name)
 		log.Printf("%s", profile.Info.TeamID)
 		log.Printf("%s", profile.Info.ExportType)
 	}
+
+	exportEnvironmentVariable("PROFILE_TEAM_ID", teamId)
+	exportEnvironmentVariable("PROFILE_NAME_DEVELOPMENT", developmentProfileName)
+	exportEnvironmentVariable("PROFILE_NAME_DISTRIBUTION", productionProfileName)
 }
