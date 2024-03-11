@@ -354,10 +354,6 @@ func main() {
 		if profile.Info.ExportType != "development" && len(productionProfileName) == 0 {
 			productionProfileName = profile.Info.Name
 		}
-
-		log.Printf("%s", profile.Info.Name)
-		log.Printf("%s", profile.Info.TeamID)
-		log.Printf("%s", profile.Info.ExportType)
 	}
 
 	exportEnvironmentVariable("PROFILE_TEAM_ID", teamId)
