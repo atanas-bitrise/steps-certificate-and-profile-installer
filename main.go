@@ -346,7 +346,7 @@ func main() {
 		}
 
 		if len(teamId) == 0 {
-			teamId = profile.Info.Name
+			teamId = profile.Info.TeamID
 		}
 		if profile.Info.ExportType == "development" && len(developmentProfileName) == 0 {
 			developmentProfileName = profile.Info.Name
