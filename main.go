@@ -331,5 +331,7 @@ func main() {
 		if err := assetInstaller.InstallProfile(profile.Profile); err != nil {
 			failE(fmt.Errorf("Failed to install Provisioning Profile: %w", err))
 		}
+
+		log.Printf("%s", profile.Info.Name)
 	}
 }
