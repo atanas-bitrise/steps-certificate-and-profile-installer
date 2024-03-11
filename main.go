@@ -333,5 +333,7 @@ func main() {
 		}
 
 		log.Printf("%s", profile.Info.Name)
+		log.Printf("%s", profile.Info.TeamID)
+		log.Printf("%s", profile.Info.ExportType)
 	}
 }
