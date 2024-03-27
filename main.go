@@ -333,7 +333,7 @@ func main() {
 	log.Infof("Installing Provisioning Profile(s)")
 
 	var teamId string
-	var developmentProfileName string
+	var codeSignIdentity string
 	var productionProfileName string
 	var codeSignIdentityFull string
 
@@ -350,16 +350,13 @@ func main() {
 			teamId = profile.Info.TeamID
 		}
 		codeSignIdentityFull = profile.Info.DeveloperCertificates[0].CommonName
-		developmentProfileName = codeSignIdentityFull[:strings.IndexByte(codeSignIdentityFull, ':')]
-		if profile.Info.ExportType == "development" && len(developmentProfileName) == 0 {
-			// developmentProfileName = profile.Info.Name
-		}
+		codeSignIdentity = codeSignIdentityFull[:strings.IndexByte(codeSignIdentityFull, ':')]
 		if profile.Info.ExportType != "development" && len(productionProfileName) == 0 {
 			productionProfileName = profile.Info.Name
 		}
 	}
 
 	exportEnvironmentVariable("PROFILE_TEAM_ID", teamId)
-	exportEnvironmentVariable("PROFILE_NAME_DEVELOPMENT", developmentProfileName)
+	exportEnvironmentVariable("PROFILE_IDENTITY", codeSignIdentity)
 	exportEnvironmentVariable("PROFILE_NAME_DISTRIBUTION", productionProfileName)
 }
