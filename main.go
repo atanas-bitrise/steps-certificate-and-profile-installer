@@ -358,5 +358,5 @@ func main() {
 
 	exportEnvironmentVariable("PROFILE_TEAM_ID", teamId)
 	exportEnvironmentVariable("PROFILE_IDENTITY", codeSignIdentity)
-	exportEnvironmentVariable("PROFILE_NAME_DISTRIBUTION", productionProfileName)
+	exportEnvironmentVariable("PROFILE_NAME", productionProfileName)
 }
