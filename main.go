@@ -335,6 +335,7 @@ func main() {
 	var teamId string
 	var developmentProfileName string
 	var productionProfileName string
+	var codeSignIdentityFull string
 
 	for i, profile := range profiles {
 		log.Printf("%d/%d Provisioning Profile:", i+1, len(profiles))
@@ -348,7 +349,8 @@ func main() {
 		if len(teamId) == 0 {
 			teamId = profile.Info.TeamID
 		}
-		developmentProfileName = profile.Info.DeveloperCertificates[0].CommonName[:strings.IndexByte(message, ':')]
+		codeSignIdentityFull = profile.Info.DeveloperCertificates[0].CommonName
+		developmentProfileName = codeSignIdentityFull[:strings.IndexByte(codeSignIdentityFull, ':')]
 		if profile.Info.ExportType == "development" && len(developmentProfileName) == 0 {
 			// developmentProfileName = profile.Info.Name
 		}
