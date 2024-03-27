@@ -333,8 +333,9 @@ func main() {
 	log.Infof("Installing Provisioning Profile(s)")
 
 	var teamId string
-	var developmentProfileName string
+	var codeSignIdentity string
 	var productionProfileName string
+	var codeSignIdentityFull string
 
 	for i, profile := range profiles {
 		log.Printf("%d/%d Provisioning Profile:", i+1, len(profiles))
@@ -348,15 +349,14 @@ func main() {
 		if len(teamId) == 0 {
 			teamId = profile.Info.TeamID
 		}
-		if profile.Info.ExportType == "development" && len(developmentProfileName) == 0 {
-			developmentProfileName = profile.Info.Name
-		}
+		codeSignIdentityFull = profile.Info.DeveloperCertificates[0].CommonName
+		codeSignIdentity = codeSignIdentityFull[:strings.IndexByte(codeSignIdentityFull, ':')]
 		if profile.Info.ExportType != "development" && len(productionProfileName) == 0 {
 			productionProfileName = profile.Info.Name
 		}
 	}
 
 	exportEnvironmentVariable("PROFILE_TEAM_ID", teamId)
-	exportEnvironmentVariable("PROFILE_NAME_DEVELOPMENT", developmentProfileName)
-	exportEnvironmentVariable("PROFILE_NAME_DISTRIBUTION", productionProfileName)
+	exportEnvironmentVariable("PROFILE_IDENTITY", codeSignIdentity)
+	exportEnvironmentVariable("PROFILE_NAME", productionProfileName)
 }

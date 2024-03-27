@@ -144,15 +144,15 @@ outputs:
     is_expand: false
     is_required: true
     is_dont_change_value: true
-- PROFILE_NAME_DEVELOPMENT: ""
+- PROFILE_IDENTITY: ""
   opts:
-    title: "Name of the development provisioning profile"
-    summary: "Only one development provisioning profile is supported."
+    title: "Code sign identity"
+    summary: "Only one code sign identity is supported."
     description: ""
     is_expand: false
     is_required: true
     is_dont_change_value: true
-- PROFILE_NAME_DISTRIBUTION: ""
+- PROFILE_NAME: ""
   opts:
     title: "Name of the distribution provisioning profile"
     summary: "Only one distribution provisioning profile is supported."
