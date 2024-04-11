@@ -117,6 +117,7 @@ func (c Config) print() {
 
 	log.Printf(" - KeychainPath: %s", c.KeychainPath)
 	log.Printf(" - KeychainPassword: %s", secureInput(c.KeychainPassword))
+	log.Printf(" - ExportMethod: %s", secureInput(c.ExportMethod))
 }
 
 func (c Config) validate() error {
