@@ -336,6 +336,9 @@ func main() {
 	var codeSignIdentity string
 	var productionProfileName string
 	var codeSignIdentityFull string
+	var exportType = os.Getenv("SA_DISTRIBUTION_METHOD")
+	fmt.Println()
+	log.Infof("Export type: %w", exportType)
 
 	for i, profile := range profiles {
 		log.Printf("%d/%d Provisioning Profile:", i+1, len(profiles))
@@ -346,12 +349,10 @@ func main() {
 			failE(fmt.Errorf("Failed to install Provisioning Profile: %w", err))
 		}
 
-		if len(teamId) == 0 {
+		if len(exportType) > 0 && exportType == profile.Info.ExportType {
 			teamId = profile.Info.TeamID
-		}
-		codeSignIdentityFull = profile.Info.DeveloperCertificates[0].CommonName
-		codeSignIdentity = codeSignIdentityFull[:strings.IndexByte(codeSignIdentityFull, ':')]
-		if profile.Info.ExportType != "development" && len(productionProfileName) == 0 {
+			codeSignIdentityFull = profile.Info.DeveloperCertificates[0].CommonName
+			codeSignIdentity = codeSignIdentityFull[:strings.IndexByte(codeSignIdentityFull, ':')]
 			productionProfileName = profile.Info.Name
 		}
 	}
