@@ -36,6 +36,7 @@ type Config struct {
 
 	KeychainPath     string
 	KeychainPassword string
+	ExportMethod     string
 }
 
 func createConfigFromEnvs() Config {
@@ -51,6 +52,7 @@ func createConfigFromEnvs() Config {
 
 		KeychainPath:     os.Getenv("keychain_path"),
 		KeychainPassword: os.Getenv("keychain_password"),
+		ExportMethod:     os.Getenv("export_method"),
 	}
 }
 
@@ -336,9 +338,8 @@ func main() {
 	var codeSignIdentity string
 	var productionProfileName string
 	var codeSignIdentityFull string
-	var exportType = os.Getenv("SA_DISTRIBUTION_METHOD")
 	fmt.Println()
-	log.Infof("Export type: %w", exportType)
+	log.Infof("Export type: %w", config.ExportMethod)
 
 	for i, profile := range profiles {
 		log.Printf("%d/%d Provisioning Profile:", i+1, len(profiles))
@@ -349,7 +350,7 @@ func main() {
 			failE(fmt.Errorf("Failed to install Provisioning Profile: %w", err))
 		}
 
-		if len(exportType) > 0 && exportType == string(profile.Info.ExportType) {
+		if len(config.ExportMethod) > 0 && config.ExportMethod == string(profile.Info.ExportType) {
 			teamId = profile.Info.TeamID
 			codeSignIdentityFull = profile.Info.DeveloperCertificates[0].CommonName
 			codeSignIdentity = codeSignIdentityFull[:strings.IndexByte(codeSignIdentityFull, ':')]
