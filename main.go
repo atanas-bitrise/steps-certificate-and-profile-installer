@@ -117,7 +117,7 @@ func (c Config) print() {
 
 	log.Printf(" - KeychainPath: %s", c.KeychainPath)
 	log.Printf(" - KeychainPassword: %s", secureInput(c.KeychainPassword))
-	log.Printf(" - ExportMethod: %s", secureInput(c.ExportMethod))
+	log.Printf(" - ExportMethod: %s", c.ExportMethod)
 }
 
 func (c Config) validate() error {
@@ -339,8 +339,6 @@ func main() {
 	var codeSignIdentity string
 	var productionProfileName string
 	var codeSignIdentityFull string
-	fmt.Println()
-	log.Infof("Export type: %w", configs.ExportMethod)
 
 	for i, profile := range profiles {
 		log.Printf("%d/%d Provisioning Profile:", i+1, len(profiles))
