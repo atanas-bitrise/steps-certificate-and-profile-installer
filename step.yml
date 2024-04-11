@@ -135,6 +135,13 @@ inputs:
       You can specify a local path as well, using the `file://` scheme.
       For example `file://./BuildAnything.mobileprovision`
     is_sensitive: true
+- export_method: $SA_DISTRIBUTION_METHOD
+  opts:
+    category: Export method
+    title: Export method for Xcode Archive
+    description: |
+      The export method has match the parameter of the Xcode Archive Step
+    is_sensitive: false
 outputs:
 - PROFILE_TEAM_ID: ""
   opts:
