@@ -349,7 +349,7 @@ func main() {
 			failE(fmt.Errorf("Failed to install Provisioning Profile: %w", err))
 		}
 
-		if len(exportType) > 0 && exportType == profile.Info.ExportType {
+		if len(exportType) > 0 && exportType == string(profile.Info.ExportType) {
 			teamId = profile.Info.TeamID
 			codeSignIdentityFull = profile.Info.DeveloperCertificates[0].CommonName
 			codeSignIdentity = codeSignIdentityFull[:strings.IndexByte(codeSignIdentityFull, ':')]
