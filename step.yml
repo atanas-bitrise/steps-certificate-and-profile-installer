@@ -167,3 +167,11 @@ outputs:
     is_expand: false
     is_required: true
     is_dont_change_value: true
+- PROFILE_BUNDLE_ID: ""
+  opts:
+    title: "Name of the bundle ID"
+    summary: "Only one Bundle ID is supported."
+    description: ""
+    is_expand: false
+    is_required: true
+    is_dont_change_value: true
