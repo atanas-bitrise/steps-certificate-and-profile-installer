@@ -339,6 +339,7 @@ func main() {
 	var codeSignIdentity string
 	var productionProfileName string
 	var codeSignIdentityFull string
+	var bundleIdName string
 
 	for i, profile := range profiles {
 		log.Printf("%d/%d Provisioning Profile:", i+1, len(profiles))
@@ -354,10 +355,13 @@ func main() {
 			codeSignIdentityFull = profile.Info.DeveloperCertificates[0].CommonName
 			codeSignIdentity = codeSignIdentityFull[:strings.IndexByte(codeSignIdentityFull, ':')]
 			productionProfileName = profile.Info.Name
+			bundleIdName = profile.Info.BundleID
 		}
 	}
 
 	exportEnvironmentVariable("PROFILE_TEAM_ID", teamId)
 	exportEnvironmentVariable("PROFILE_IDENTITY", codeSignIdentity)
 	exportEnvironmentVariable("PROFILE_NAME", productionProfileName)
+	exportEnvironmentVariable("PROFILE_BUNDLE_ID", bundleIdName)
+	
 }
